@@ -54,7 +54,7 @@ $(document).ready(function () {
      */
     function estadentro(retangulo, circulo) {
         var n = 0;//contador de pontos dentro da circunferencia
-        var np = 3//número de pontos a serem considerados
+        var np = 3;//número de pontos a serem considerados
         var atr = retangulo.getAttrs();
         var pontos = [retangulo.position(),
             {x: atr.x + atr.width, y: atr.y},
