@@ -54,13 +54,13 @@ $(document).ready(function () {
      */
     function estadentro(retangulo, circulo) {
         var n = 0;//contador de pontos dentro da circunferencia
-        var np = 3;//número de pontos a serem considerados
+        var np = 3;//número de pontos a serem considerados (5 = completamente dentro)
         var atr = retangulo.getAttrs();
-        var pontos = [retangulo.position(),
-            {x: atr.x + atr.width, y: atr.y},
-            {x: atr.x + atr.width, y: atr.y + atr.height},
-            {x: atr.x, y: atr.y + atr.height},
-            {x: atr.x + atr.width / 2, y: atr.y + atr.height / 2}];
+        var pontos = [retangulo.position(), //Canto 1 (em sentido horário partindo do canto superior esquerdo)
+            {x: atr.x + atr.width, y: atr.y}, //Canto 2
+            {x: atr.x + atr.width, y: atr.y + atr.height}, //Canto 3
+            {x: atr.x, y: atr.y + atr.height}, //Canto 4
+            {x: atr.x + atr.width / 2, y: atr.y + atr.height / 2}];//Centro
 
         var c = {x: circulo.getAttr('x'),
             y: circulo.getAttr('y'),
@@ -68,7 +68,7 @@ $(document).ready(function () {
         
         console.log(c);
 
-        $.each(pontos, function (i, p) {
+        $.each(pontos, function (i, p) {//Itera os pontos para saber quantos estão dentro do circulo
             //Incrementa n se o ponto esta dentro do circulo
             n = (intoCirc(p, c)) ? ++n : n;
         });
