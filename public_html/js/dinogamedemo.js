@@ -50,6 +50,7 @@ $(document).ready(function () {
      */
     function estadentro(retangulo, circulo) {
         var n = 0;//contador de pontos dentro da circunferencia
+        var np = 5;//todos os pontos dentro do circulo
         var atr = retangulo.getAttrs();
         var pontos = [retangulo.position(),
             {x: atr.x + atr.width, y: atr.y},
@@ -69,7 +70,7 @@ $(document).ready(function () {
         });
 
         console.log(n);
-        if (n > 4) {//se n > 4 o retangulo esta completamente dentro do circulo
+        if (n > np) {//se n > np o retangulo esta completamente dentro do circulo
             console.log("Esta dentro do círculo!!");
             console.log(retangulo.position());
             //alert("Está dentro do círculo!!");
