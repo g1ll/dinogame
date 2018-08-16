@@ -91,13 +91,13 @@ $(document).ready(function () {
                 //(TESTE)? TRUE : FALSE ;
             });
 
-//        console.log(n);
+        console.log(n);
             if (n >= np) {//se n > np o retangulo esta completamente dentro do circulo
 //            console.log("Esta dentro do círculo!!");
 //            console.log(retangulo.position());
                 //alert("Está dentro do círculo!!");
                 retangulo.fill('red');
-                console.log(retangulo);
+//                console.log(retangulo);
                 retangulo.setStrokeWidth(10);
                 retangulo.stroke('black');
             } else {
