@@ -70,7 +70,7 @@ $(document).ready(function () {
         });
 
         console.log(n);
-        if (n > np) {//se n > np o retangulo esta completamente dentro do circulo
+        if (n >= np) {//se n > np o retangulo esta completamente dentro do circulo
             console.log("Esta dentro do círculo!!");
             console.log(retangulo.position());
             //alert("Está dentro do círculo!!");
