@@ -116,7 +116,7 @@ $(document).ready(function () {
          */
         function intoCirc(p, c) {
             //(Cx – Px)^2 + (Cy – Py)^2 < Raio^2
-            if (((p.x - c.x) ** 2 + (p.y - c.y) ** 2) < c.r ** 2) {
+            if (((p.x - c.x) ** 2 + (p.y - c.y) ** 2) <= c.r ** 2) {
                 return true;
             } else {
                 return false;
