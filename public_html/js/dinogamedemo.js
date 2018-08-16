@@ -11,7 +11,7 @@
 /* global Konva */
 $(document).ready(function () {
     
-    var stage = new Konva.Stage({
+        var stage = new Konva.Stage({
         container: 'container', // id of container <div>
         width: $(window).width(),
         height: $(window).height()
@@ -39,11 +39,7 @@ $(document).ready(function () {
         strokeWidth: 4,
         draggable: true});
 
-    rect.on('dragend', function () {
-        estadentro(this, circle);
-    });
-    
-    rect.on('dragmove', function () {
+    rect.on('dragend dragmove', function () {
         estadentro(this, circle);
     });
 
@@ -98,6 +94,8 @@ $(document).ready(function () {
             return false;
         }
     }
+    
+    
 // add the shape to the layer
     layer.add(circle);
     layer.add(rect);
