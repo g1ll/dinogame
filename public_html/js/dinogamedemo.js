@@ -11,7 +11,6 @@
 /* global Konva */
 $(document).ready(function () {
 
-
     var yodaImg = new Image();
     yodaImg.src = 'img/yoda.png';
     yodaImg.onload = function () {
