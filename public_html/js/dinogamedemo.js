@@ -27,7 +27,7 @@ $(document).ready(function () {
         var circle = new Konva.Circle({
             x: stage.getWidth() / 2,
             y: stage.getHeight() / 2,
-            radius: 70,
+            radius: 100,
             fill: 'red',
             stroke: 'black',
             strokeWidth: 4
