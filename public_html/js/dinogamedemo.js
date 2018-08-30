@@ -79,7 +79,8 @@ $(document).ready(function () {
 
     function isLoaded() {
         if (load === total) {
-            clearInterval(isLoaded);
+            clearInterval(isLoaded);            
+            console.log('Pronto');
             init();
         } else {
             console.log('Carregando...');
