@@ -53,7 +53,8 @@ $(document).ready(function () {
             fill: fill,
             stroke: stroke,
             strokeWidth: 4,
-            certo: certo
+            certo: certo,
+            visible:false
         });
         return circle;
     }
