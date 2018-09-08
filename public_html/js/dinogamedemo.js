@@ -1,9 +1,14 @@
 /* 
  * Dino Game Demo 
  *  - Testando a matematica basica
- * Author: Gill Velleda Gonzales
+ * Authors: 
  * 
- * Version: 0.1
+ * IFSUL TEAM
+ *  • Gill Velleda Gonzales
+ *  • Daniel Trindade Cavalcanti
+ *  • Rafael Garcia Blanco
+ * 
+ * Version: 0.5
  * 
  * Use: jQuery and Konva
  */
