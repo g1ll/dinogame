@@ -59,11 +59,14 @@ $(document).ready(function () {
     var sudeste = createCircle(stage.getWidth() / 1.7, stage.getHeight() / 1.46, stage.getWidth() / 14, "blue", "black", 4);
     var sul = createCircle(stage.getWidth() / 2.15, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
 
-    var button = createRect(50, stage.getHeight() - stage.getHeight() / 2, 100, 50, "green", "black", 4, false, 1);
+    var button = createRect(
+            stage.getWidth()-stage.getWidth()/5,
+            stage.getHeight() - stage.getHeight() / 4, 100, 50, "green", "black", 4, false, 1);
 //    var rect = createRect(50,50,150,100,"blue","black",4,true,1);
+       console.log(button)
     var button_text = new Konva.Text({
-        x: 58,
-        y: stage.getHeight() - stage.getHeight() / 2 + 15,
+        x: button.attrs.x+5,
+        y: button.attrs.y+10,
         text: 'Verificar',
         fontSize: 25,
         fontFamily: 'Calibri',
@@ -71,7 +74,6 @@ $(document).ready(function () {
     });
 
 
-    console.log(button);
     function createRect(x, y, w, h, f, s, sw, drag, id) {
         var rect = new Konva.Rect({
             x: x,
@@ -154,10 +156,10 @@ $(document).ready(function () {
         selecionados[this.getAttr("id")] = testAllRegions(para);
     });
 
-    button.on('click touch', function () {
+    button.on('click touchstart', function () {
         alert(selecionados);
     });
-    button_text.on('click touch', function () {
+    button_text.on('click touchstart', function () {
         alert(selecionados);
     });
 
