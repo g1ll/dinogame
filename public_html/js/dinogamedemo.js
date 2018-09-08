@@ -10,6 +10,26 @@
 
 /* global Konva */
 $(document).ready(function () {
+
+    var yodaImg = new Image();
+    yodaImg.src = 'img/yoda.jpg';
+    var yodaImg1 = new Image();
+    yodaImg1.src = 'img/lesto.jfif';
+    var yodaImg2 = new Image();
+    yodaImg2.src = 'img/masto.jpg';
+    var yodaImg3 = new Image();
+    yodaImg3.src = 'img/mega.jpg';
+    var yodaImg4 = new Image();
+    yodaImg4.src = 'img/para.jpg';
+    var yoda = createImage(50,50,100,100,yodaImg,true,0);
+    var lesto = createImage(50,50,100,100,yodaImg1,true,1);
+    var masto = createImage(50,50,100,100,yodaImg2,true,2);
+    var mega = createImage(50,50,100,100,yodaImg3,true,3);
+    var para = createImage(50,50,100,100,yodaImg4,true,4);
+    var brmap = new Image();
+    brmap.src = 'img/brmap.png';
+    var selecionados=[0,0,0,0,0] ;
+    console.log(selecionados);
     
     var stage = new Konva.Stage({
         container: 'container', // id of container <div>
@@ -20,32 +40,137 @@ $(document).ready(function () {
     var layer = new Konva.Layer();
 
 // create our shape
-    var circle = new Konva.Circle({
-        x: stage.getWidth() / 2,
-        y: stage.getHeight() / 2,
-        radius: 70,
-        fill: 'red',
-        stroke: 'black',
-        strokeWidth: 4
-    });
 
+    
+    function createCircle(x,y,rad, fill, stroke,certo){
+        var circle = new Konva.Circle({
+        x: x,
+        y: y,
+        radius: rad,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: 4,
+        certo: certo
+        });
+        return circle;
+    }
+    var noroeste = createCircle(stage.getWidth()/4, stage.getHeight()/3, stage.getWidth()/14, "green", "black",0);
+    var norte = createCircle(stage.getWidth()/2, stage.getHeight()/3.1, stage.getWidth()/14, "red", "black",1);
+    var nordeste = createCircle(stage.getWidth()/1.5, stage.getHeight()/2.3, stage.getWidth()/14, "yellow", "black",2);
+    var centroOeste = createCircle(stage.getWidth()/2.5, stage.getHeight()/1.8, stage.getWidth()/14, "green", "black",3);
+    var sudeste = createCircle(stage.getWidth()/1.7, stage.getHeight()/1.46, stage.getWidth()/14, "blue", "black",4);
+    var sul = createCircle(stage.getWidth()/2.15, stage.getHeight()/1.2, stage.getWidth()/14, "orange", "black",5);
+    
+    var button = createRect(50,600,100,50,"blue","black",4,false,1);
+    var rect = createRect(50,50,150,100,"blue","black",4,true,1);
+
+    function createRect(x,y,w,h,f,s,sw,drag,id){
     var rect = new Konva.Rect({
+        x: x,
+        y: y,
+        width: w,
+        height: h,
+        fill: f,
+        stroke: s,
+        strokeWidth: sw,
+        draggable: drag,
+       id: id });
+       return rect;
+    }
+
+    function createImage(x,y,w,h,img,drag,id=null){
+        var imagem = new Konva.Image({
         x: 50,
         y: 50,
         width: 100,
-        height: 50,
-        fill: 'blue',
-        stroke: 'black',
-        strokeWidth: 4,
-        draggable: true});
+        height: 100,
+        image: img,
+        draggable: true,
+        id: id});
+        return imagem;
+}
 
-    rect.on('dragend', function () {
-        estadentro(this, circle);
+    var mapa = new Konva.Image({
+        x: 0,
+        y: 70,
+        width: stage.getWidth()-70,
+        height: stage.getHeight()-70,
+        image: brmap,
+        draggable: false
+    });
+
+    var load = 0;
+    var total = 2;
+
+    var loop = setInterval(isLoaded, 1000);
+    loadAssets();
+
+    function loadAssets() {
+        brmap.onload = function () {
+            load++;
+        };
+        yodaImg.onload = function () {
+            load++;
+        };
+    }
+
+    function isLoaded() {
+        if (load === total) {
+            clearInterval(isLoaded);            
+            console.log('Pronto');
+            init();
+        } else {
+            console.log('Carregando...');
+        }
+    }
+    
+    yoda.on('dragend dragmove', function () {
+        selecionados[this.getAttr("id")]=testAllRegions(yoda);
     });
     
-    rect.on('dragmove', function () {
-        estadentro(this, circle);
+    lesto.on('dragend dragmove', function () {
+        selecionados[this.getAttr("id")]=testAllRegions(lesto);
     });
+    
+    masto.on('dragend dragmove', function () {
+        selecionados[this.getAttr("id")]=testAllRegions(masto);
+    });
+    
+    mega.on('dragend dragmove', function () {
+        selecionados[this.getAttr("id")]=testAllRegions(mega);
+    });
+    
+    para.on('dragend dragmove', function () {
+        selecionados[this.getAttr("id")]=testAllRegions(para);
+    });
+    
+    button.on('click',function () {
+        alert(selecionados);
+    });
+    
+    function testAllRegions(ret){
+        retorno=0;
+        if(estadentro(ret, noroeste)==true){
+            retorno=1;
+        }
+        if(estadentro(ret, norte)==true){
+           retorno=1; 
+        }
+        if(estadentro(ret, nordeste)==true){
+            retorno=1;
+        }
+        if(estadentro(ret, centroOeste)==true){
+           retorno=1; 
+        }
+        if(estadentro(ret, sudeste)==true){
+           retorno=1; 
+        }
+        if(estadentro(ret, sul)==true){
+           retorno=1; 
+        }
+        return retorno;
+    }
+
 
     /**
      * @description Testa se um retângulo esta completamente dentro de uma circunferencia
@@ -54,37 +179,59 @@ $(document).ready(function () {
      */
     function estadentro(retangulo, circulo) {
         var n = 0;//contador de pontos dentro da circunferencia
-        var np = 3;//número de pontos a serem considerados (5 = completamente dentro)
+        if(stage.getWidth() <500){
+            var np=1;    
+        }else{
+            var np = 3;
+        }//todos os pontos dentro do circulo
         var atr = retangulo.getAttrs();
-        var pontos = [retangulo.position(), //Canto 1 (em sentido horário partindo do canto superior esquerdo)
-            {x: atr.x + atr.width, y: atr.y}, //Canto 2
-            {x: atr.x + atr.width, y: atr.y + atr.height}, //Canto 3
-            {x: atr.x, y: atr.y + atr.height}, //Canto 4
-            {x: atr.x + atr.width / 2, y: atr.y + atr.height / 2}];//Centro
+//        console.log(atr);
+        var pontos = [retangulo.position(),
+            {x: atr.x + atr.width, y: atr.y},
+            {x: atr.x + atr.width, y: atr.y + atr.height},
+            {x: atr.x, y: atr.y + atr.height},
+            {x: atr.x + atr.width / 2, y: atr.y + atr.height / 2}];
 
         var c = {x: circulo.getAttr('x'),
             y: circulo.getAttr('y'),
-            r: circulo.getAttr('radius')};
-        
-        console.log(c);
+            r: circulo.getAttr('radius'),
+            certo: circulo.getAttr('certo')};
 
-        $.each(pontos, function (i, p) {//Itera os pontos para saber quantos estão dentro do circulo
+//        console.log(c);
+
+        $.each(pontos, function (i, p) {
             //Incrementa n se o ponto esta dentro do circulo
+            // console.log(i+':'+p.x);
             n = (intoCirc(p, c)) ? ++n : n;
+            //(TESTE)? TRUE : FALSE ;
         });
-
+        console.log(retangulo.getAttr('id'));
         console.log(n);
-        if (n >= np) {//se n >= np o retangulo esta completamente dentro do circulo
-            console.log("Esta dentro do círculo!!");
-            console.log(retangulo.position());
+        if (n >= np) {
+            if(c.certo==retangulo.getAttr('id')){
+            //se n > np o retangulo esta completamente dentro do circulo
+//            console.log("Esta dentro do círculo!!");
+//            console.log(retangulo.position());
             //alert("Está dentro do círculo!!");
             retangulo.fill('red');
+//                console.log(retangulo);
+            retangulo.setStrokeWidth(10);
+            retangulo.stroke('black');
+            
+            console.log("circulo certo");
+            return 1;
+        }else{
+            console.log('circulo errado');
+            return 0;
+        }
         } else {
             retangulo.fill('blue');
+            retangulo.stroke('');
         }
         //
         //console.log(obj.attrs);
         layer.draw();
+
     }
     /**
      * @description Calcula se um ponto (p) esta dentro de uma circunferencia (c)
@@ -93,18 +240,36 @@ $(document).ready(function () {
      */
     function intoCirc(p, c) {
         //(Cx – Px)^2 + (Cy – Py)^2 < Raio^2
-        if (((p.x - c.x) ** 2 + (p.y - c.y) ** 2) < c.r ** 2) {
+        if (((p.x - c.x) ** 2 + (p.y - c.y) ** 2) <= c.r ** 2) {
             return true;
         } else {
             return false;
         }
     }
-// add the shape to the layer
-    layer.add(circle);
-    layer.add(rect);
+
+    function init() {
+        // add the shape to the layer
+        layer.add(mapa);
+        
+        layer.add(noroeste);
+        layer.add(norte);
+        layer.add(nordeste);
+        layer.add(centroOeste);
+        layer.add(sudeste);
+        layer.add(sul);
+        layer.add(yoda);
+        layer.add(lesto);
+        layer.add(masto);
+        layer.add(mega);
+        layer.add(para);
+        layer.add(rect);
+        layer.add(button);
 
 // add the layer to the stage
-    stage.add(layer);
+        stage.add(layer);
 // draw the image
-    layer.draw();
+//    layer.draw();
+    }
+
+
 });
