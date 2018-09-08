@@ -248,7 +248,6 @@ $(document).ready(function () {
     function init() {
         // add the shape to the layer
         layer.add(mapa);
-        layer.add(circle);
         layer.add(rect);
         layer.add(yoda);
         
