@@ -60,13 +60,13 @@ $(document).ready(function () {
     var sul = createCircle(stage.getWidth() / 2.15, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
 
     var button = createRect(
-            stage.getWidth()-125,
+            stage.getWidth() - 150,
             stage.getHeight() - stage.getHeight() / 5, 100, 50, "green", "black", 4, false, 1);
 //    var rect = createRect(50,50,150,100,"blue","black",4,true,1);
 
     var button_text = new Konva.Text({
-        x: button.attrs.x+5,
-        y: button.attrs.y+10,
+        x: button.attrs.x + 5,
+        y: button.attrs.y + 10,
         text: 'Verificar',
         fontSize: 25,
         fontFamily: 'Calibri',
@@ -84,7 +84,7 @@ $(document).ready(function () {
             stroke: s,
             strokeWidth: sw,
             draggable: drag,
-            cornerRadius:20,
+            cornerRadius: 20,
             id: id});
 
         return rect;
@@ -137,23 +137,39 @@ $(document).ready(function () {
     }
 
     yoda.on('dragend dragmove', function () {
-        selecionados[this.getAttr("id")] = testAllRegions(yoda);
+         if (this.attrs.width < sul.attrs.radius * 2)
+            selecionados[this.getAttr("id")] = testAllRegions(this);
+        else
+            selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(this);
     });
 
     lesto.on('dragend dragmove', function () {
-        selecionados[this.getAttr("id")] = testAllRegions(lesto);
+        if (this.attrs.width < sul.attrs.radius * 2)
+            selecionados[this.getAttr("id")] = testAllRegions(this);
+        else
+            selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(this);
     });
 
     masto.on('dragend dragmove', function () {
-        selecionados[this.getAttr("id")] = testAllRegions(masto);
+        if (this.attrs.width < sul.attrs.radius * 2)
+            selecionados[this.getAttr("id")] = testAllRegions(this);
+        else
+            selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(this);
     });
 
     mega.on('dragend dragmove', function () {
-        selecionados[this.getAttr("id")] = testAllRegions(mega);
+         if (this.attrs.width < sul.attrs.radius * 2)
+            selecionados[this.getAttr("id")] = testAllRegions(this);
+        else
+            selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(this);
     });
 
     para.on('dragend dragmove', function () {
-        selecionados[this.getAttr("id")] = testAllRegions(para);
+
+        if (this.attrs.width < sul.attrs.radius * 2)
+            selecionados[this.getAttr("id")] = testAllRegions(para);
+        else
+            selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(para);
     });
 
     button.on('click touchstart', function () {
@@ -165,27 +181,75 @@ $(document).ready(function () {
 
     function testAllRegions(ret) {
         retorno = 0;
-        if (estadentro(ret, noroeste) == true) {
+        if (estadentro(ret, noroeste)) {
             retorno = 1;
         }
-        if (estadentro(ret, norte) == true) {
+        if (estadentro(ret, norte)) {
             retorno = 1;
         }
-        if (estadentro(ret, nordeste) == true) {
+        if (estadentro(ret, nordeste)) {
             retorno = 1;
         }
-        if (estadentro(ret, centroOeste) == true) {
+        if (estadentro(ret, centroOeste)) {
             retorno = 1;
         }
-        if (estadentro(ret, sudeste) == true) {
+        if (estadentro(ret, sudeste)) {
             retorno = 1;
         }
-        if (estadentro(ret, sul) == true) {
+        if (estadentro(ret, sul)) {
             retorno = 1;
         }
         return retorno;
     }
 
+    function testAllRegionsInnerCirc(ret) {
+        retorno = 0;
+        
+        console.log(sudeste.attrs.x);
+        if (estadentro_circ(ret, noroeste)) {
+            retorno = 1;
+        }
+        if (estadentro_circ(ret, norte)) {
+            retorno = 1;
+        }
+        if (estadentro_circ(ret, nordeste)) {
+            retorno = 1;
+        }
+        if (estadentro_circ(ret, centroOeste)) {
+            retorno = 1;
+        }
+        if (estadentro_circ(ret, sudeste)) {
+            retorno = 1;
+        }
+        if (estadentro_circ(ret, sul)) {
+            retorno = 1;
+        }
+        return retorno;
+    }
+
+
+    function estadentro_circ(ret, circ) {
+        console.log(ret.attrs.x);
+        console.log(circ.attrs.x);
+        var rx1 = ret.attrs.x;
+        var ry1 = ret.attrs.y;
+        var rx2 = rx1 + ret.attrs.width;
+        var ry2 = ry1+ ret.attrs.height;
+        var cx = circ.attrs.x;
+        var cy = circ.attrs.y;
+        var cid = circ.attrs.certo;
+        var rid = ret.attrs.id;
+        console.log(cx+" >= "+rx1+" &&"+ cx+" <= "+rx2+") && ("+cy +">="+ ry1+" && "+cy +"<= "+ry2+") && "+cid+" === "+rid);
+        if ((cx >= rx1 && cx <= rx2) && (cy >= ry1 && cy <= ry2) && cid === rid) {
+           
+           console.log('certo');
+            
+            return true;
+        } else {
+            console.log('errado:'+circ.attrs.x+"  "+circ.attrs.certo);
+            return false;
+        }
+    }
 
     /**
      * @description Testa se um retângulo esta completamente dentro de uma circunferencia
@@ -234,10 +298,10 @@ $(document).ready(function () {
                 retangulo.stroke('black');
 
                 console.log("circulo certo");
-                return 1;
+                return true;
             } else {
                 console.log('circulo errado');
-                return 0;
+                return false;
             }
         } else {
             retangulo.fill('blue');
