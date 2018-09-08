@@ -60,10 +60,10 @@ $(document).ready(function () {
     var sul = createCircle(stage.getWidth() / 2.15, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
 
     var button = createRect(
-            stage.getWidth()-stage.getWidth()/5,
-            stage.getHeight() - stage.getHeight() / 4, 100, 50, "green", "black", 4, false, 1);
+            stage.getWidth()-125,
+            stage.getHeight() - stage.getHeight() / 5, 100, 50, "green", "black", 4, false, 1);
 //    var rect = createRect(50,50,150,100,"blue","black",4,true,1);
-       console.log(button)
+
     var button_text = new Konva.Text({
         x: button.attrs.x+5,
         y: button.attrs.y+10,
