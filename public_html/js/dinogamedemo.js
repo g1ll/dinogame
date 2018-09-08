@@ -54,7 +54,7 @@ $(document).ready(function () {
             stroke: stroke,
             strokeWidth: 4,
             certo: certo,
-            visible:false
+            visible: false
         });
         return circle;
     }
@@ -143,7 +143,7 @@ $(document).ready(function () {
     }
 
     yoda.on('dragend dragmove', function () {
-         if (this.attrs.width < sul.attrs.radius * 2)
+        if (this.attrs.width < sul.attrs.radius * 2)
             selecionados[this.getAttr("id")] = testAllRegions(this);
         else
             selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(this);
@@ -164,7 +164,7 @@ $(document).ready(function () {
     });
 
     mega.on('dragend dragmove', function () {
-         if (this.attrs.width < sul.attrs.radius * 2)
+        if (this.attrs.width < sul.attrs.radius * 2)
             selecionados[this.getAttr("id")] = testAllRegions(this);
         else
             selecionados[this.getAttr("id")] = testAllRegionsInnerCirc(this);
@@ -180,10 +180,30 @@ $(document).ready(function () {
 
     button.on('click touchstart', function () {
         alert(selecionados);
+        mostraPontos();
     });
     button_text.on('click touchstart', function () {
         alert(selecionados);
+        mostraPontos();
     });
+
+    function mostraPontos() {
+            var p = 0;
+            $.each(selecionados,function(i,v){
+                    p+=v;
+            });
+            alert("Pontos: "+p);
+            if(p === 5){
+                alert('Parabéns!! Acertou Todos!!');
+                if(confirm("Quer reiniciar?")){
+                    location.reload();
+                }
+            }else if(p>0){
+                alert('Parabéns! Mas alguém está fora do lugar!');
+            }else{
+                 alert('Continue Tentando!');
+            }
+    };
 
     function testAllRegions(ret) {
         retorno = 0;
@@ -210,7 +230,7 @@ $(document).ready(function () {
 
     function testAllRegionsInnerCirc(ret) {
         retorno = 0;
-        
+
         console.log(sudeste.attrs.x);
         if (estadentro_circ(ret, noroeste)) {
             retorno = 1;
@@ -240,19 +260,19 @@ $(document).ready(function () {
         var rx1 = ret.attrs.x;
         var ry1 = ret.attrs.y;
         var rx2 = rx1 + ret.attrs.width;
-        var ry2 = ry1+ ret.attrs.height;
+        var ry2 = ry1 + ret.attrs.height;
         var cx = circ.attrs.x;
         var cy = circ.attrs.y;
         var cid = circ.attrs.certo;
         var rid = ret.attrs.id;
-        console.log(cx+" >= "+rx1+" &&"+ cx+" <= "+rx2+") && ("+cy +">="+ ry1+" && "+cy +"<= "+ry2+") && "+cid+" === "+rid);
+        console.log(cx + " >= " + rx1 + " &&" + cx + " <= " + rx2 + ") && (" + cy + ">=" + ry1 + " && " + cy + "<= " + ry2 + ") && " + cid + " === " + rid);
         if ((cx >= rx1 && cx <= rx2) && (cy >= ry1 && cy <= ry2) && cid === rid) {
-           
-           console.log('certo');
-            
+
+            console.log('certo');
+
             return true;
         } else {
-            console.log('errado:'+circ.attrs.x+"  "+circ.attrs.certo);
+            console.log('errado:' + circ.attrs.x + "  " + circ.attrs.certo);
             return false;
         }
     }
