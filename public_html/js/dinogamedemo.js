@@ -179,31 +179,35 @@ $(document).ready(function () {
     });
 
     button.on('click touchstart', function () {
-        alert(selecionados);
+        console.log(selecionados);
         mostraPontos();
     });
     button_text.on('click touchstart', function () {
-        alert(selecionados);
+        console.log(selecionados);
         mostraPontos();
     });
 
     function mostraPontos() {
-            var p = 0;
-            $.each(selecionados,function(i,v){
-                    p+=v;
-            });
-            alert("Pontos: "+p);
-            if(p === 5){
-                alert('Parabéns!! Acertou Todos!!');
-                if(confirm("Quer reiniciar?")){
-                    location.reload();
-                }
-            }else if(p>0){
-                alert('Parabéns! Mas alguém está fora do lugar!');
-            }else{
-                 alert('Continue Tentando!');
-            }
-    };
+        var p = 0;
+        var msg = "";
+        $.each(selecionados, function (i, v) {
+            p += v;
+        });
+        msg = "Pontos: " + p;
+
+        if (p === 5) {
+            msg += '\nParabéns!! Acertou Todos!!\nQuer reiniciar?';
+
+        } else if (p > 0) {
+            msg += '\nParabéns! Mas alguém está fora do lugar!';
+        } else {
+            msg += '\nContinue Tentando!';
+        }
+        if (confirm(msg) && p === 5) {
+            location.reload();
+        }
+    }
+    ;
 
     function testAllRegions(ret) {
         retorno = 0;
