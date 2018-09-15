@@ -92,7 +92,7 @@ $(document).ready(function () {
         var centroOeste = createCircle(stage.getWidth() / 2, stage.getHeight() / 1.7, stage.getWidth() / 14, "#94ba20", "black", 3);
         var sudeste = createCircle(stage.getWidth() / 1.5, stage.getHeight() / 1.46, stage.getWidth() / 14, "blue", "black", 4);
         var sul = createCircle(stage.getWidth() / 1.8, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
-    }else{//portait
+    }else{//portrait
         var noroeste = createCircle(stage.getWidth() / 4.2, stage.getHeight() / 2.8, stage.getWidth() / 14, "green", "black", 0);
         var norte = createCircle(stage.getWidth() / 2, stage.getHeight() / 2.5, stage.getWidth() / 14, "darkred", "black", 1);
         var nordeste = createCircle(stage.getWidth() / 1.5, stage.getHeight() / 2.2, stage.getWidth() / 14, "yellow", "black", 2);
