@@ -16,6 +16,10 @@
 /* global Konva */
 $(document).ready(function () {
 
+
+    
+
+
     var yodaImg = new Image();
     yodaImg.src = 'img/yoda.jpg';
     var yodaImg1 = new Image();
@@ -43,27 +47,61 @@ $(document).ready(function () {
     });
 
     var layer = new Konva.Layer();
+    
+    function dialogo(title, text) {
+        $("#dialog").attr({'title': title});
+        $("#dialog").attr({'style': 'text-align:center'});
+        $("#dialog").html(text);
+        $("#dialog").dialog(
+                {
+                    resizable: false,
+                    height: "auto",
+                    width: stage.getWidth()*0.8,
+                    modal: true,
+                    buttons: {
+                        Reiniciar: function () {
+                            $(this).dialog("close");
+                            window.location.reload();
+                        },
+                        Continuar: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+    };
 
 // create our shape
-    function createCircle(x, y, rad, fill, stroke, certo) {
+    function createCircle(x, y, rad, stroke, fill, certo) {
         var circle = new Konva.Circle({
             x: x,
             y: y,
             radius: rad,
-            fill: fill,
+//            fill: fill,
             stroke: stroke,
             strokeWidth: 4,
             certo: certo,
-            visible: false
+            visible: true
         });
         return circle;
     }
-    var noroeste = createCircle(stage.getWidth() / 4, stage.getHeight() / 3, stage.getWidth() / 14, "green", "black", 0);
-    var norte = createCircle(stage.getWidth() / 2, stage.getHeight() / 3.1, stage.getWidth() / 14, "red", "black", 1);
-    var nordeste = createCircle(stage.getWidth() / 1.5, stage.getHeight() / 2.3, stage.getWidth() / 14, "yellow", "black", 2);
-    var centroOeste = createCircle(stage.getWidth() / 2.5, stage.getHeight() / 1.8, stage.getWidth() / 14, "green", "black", 3);
-    var sudeste = createCircle(stage.getWidth() / 1.7, stage.getHeight() / 1.46, stage.getWidth() / 14, "blue", "black", 4);
-    var sul = createCircle(stage.getWidth() / 2.15, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
+
+    if (stage.getWidth() >= stage.getHeight()){ //landscape
+        var noroeste = createCircle(stage.getWidth() / 4, stage.getHeight() / 3, stage.getWidth() / 14, "green", "black", 0);
+        var norte = createCircle(stage.getWidth() / 2, stage.getHeight() / 3.1, stage.getWidth() / 14, "darkred", "black", 1);
+        var nordeste = createCircle(stage.getWidth() / 1.3, stage.getHeight() / 2.3, stage.getWidth() / 14, "yellow", "black", 2);
+        var centroOeste = createCircle(stage.getWidth() / 2, stage.getHeight() / 1.7, stage.getWidth() / 14, "#94ba20", "black", 3);
+        var sudeste = createCircle(stage.getWidth() / 1.5, stage.getHeight() / 1.46, stage.getWidth() / 14, "blue", "black", 4);
+        var sul = createCircle(stage.getWidth() / 1.8, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
+    }else{//portait
+        var noroeste = createCircle(stage.getWidth() / 4.2, stage.getHeight() / 2.8, stage.getWidth() / 14, "green", "black", 0);
+        var norte = createCircle(stage.getWidth() / 2, stage.getHeight() / 2.5, stage.getWidth() / 14, "darkred", "black", 1);
+        var nordeste = createCircle(stage.getWidth() / 1.5, stage.getHeight() / 2.2, stage.getWidth() / 14, "yellow", "black", 2);
+        var centroOeste = createCircle(stage.getWidth() / 2.5, stage.getHeight() / 1.7, stage.getWidth() / 14, "#94ba20", "black", 3);
+        var sudeste = createCircle(stage.getWidth() / 1.7, stage.getHeight() / 1.46, stage.getWidth() / 14, "blue", "black", 4);
+        var sul = createCircle(stage.getWidth() / 2.2, stage.getHeight() / 1.2, stage.getWidth() / 14, "orange", "black", 5);
+    }
+
+
 
     var button = createRect(
             stage.getWidth() - 150,
@@ -193,7 +231,7 @@ $(document).ready(function () {
         $.each(selecionados, function (i, v) {
             p += v;
         });
-        msg = "Pontos: " + p;
+        msg = "Pontos: " + p + "<br/>";
 
         if (p === 5) {
             msg += '\nParabéns!! Acertou Todos!!\nQuer reiniciar?';
@@ -203,7 +241,7 @@ $(document).ready(function () {
         } else {
             msg += '\nContinue Tentando!';
         }
-        if (confirm(msg) && p === 5) {
+        if (dialogo("Resultado", msg) && p === 5) {
             location.reload();
         }
     }
@@ -286,6 +324,7 @@ $(document).ready(function () {
      * @param retangulo = retangulo Konva.Rect();
      * @param circulo = circulo Konva.Circle();
      */
+
     function estadentro(retangulo, circulo) {
         var n = 0;//contador de pontos dentro da circunferencia
         if (stage.getWidth() < 500) {
