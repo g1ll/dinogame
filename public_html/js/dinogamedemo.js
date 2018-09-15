@@ -56,7 +56,7 @@ $(document).ready(function () {
                 {
                     resizable: false,
                     height: "auto",
-                    width: stage.getWidth()*0.8,
+                    width: ((stage.getWidth()*0.8>400)?400:stage.getWidth()*0.8),
                     modal: true,
                     buttons: {
                         Reiniciar: function () {
